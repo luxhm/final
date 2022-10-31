@@ -1,0 +1,338 @@
+body {
+  background-color: #F5F3EE;
+  font-size: 18px;
+  color: #C0C0C0;
+  font-family: 'optima', sans-serif;
+}
+
+h1 {
+  margin-top: 25px;
+  font-size: 75px;
+  text-align: center;
+  color:#9757B0;
+  font-family: crayonnette;
+}
+
+h2 {
+  margin-top: 20px;
+  margin-top: 20px;
+
+  text-align: center;
+  font-family: crayonnette;
+  font-size: 30px;
+}
+
+h3{
+  background-color: #E8E6F1;
+}
+
+div {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: #F5F3EE;
+  overflow: auto;
+  border-radius: 10px;
+}
+
+nav{
+  color: #BDABBE;
+  font-size: 16px;
+  text-align: center;
+  border-top: 1.5px solid #BDABBE;
+  border-bottom: 1.5px solid #BDABBE;
+}
+
+
+button {
+  background-color: #faf9cd;
+  font-size: 50px;
+  border-radius: 6px;
+  border: 2px solid #012a47;
+  padding: 7px 12px;
+}
+
+button:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+button:focus {
+  outline: none;
+}
+
+table {
+  border-collapse: collapse;
+  background-color: #F5F3EE;
+  margin: auto;
+  width: 80%;
+  color: #BBC2CC;
+  border-radius: 10px;
+}
+
+table, th, td {
+  border: 0px;
+  padding: 20px;
+  border: 1px dashed #9757B0;
+  border-radius: 20px;
+  text-align: center;
+}
+
+tr:hover {
+  background-color: #ccfff2;
+}
+
+a {
+  color: #BDABBE;
+}
+
+a:hover {
+  color: #BDABBE;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 20px;
+}
+
+footer {
+  margin-top: 30px;
+  text-align: center;
+  bottom: 0px;
+  left: 45%;
+}
+
+form {
+  padding: 20px;
+  margin-left: 10px;
+}
+
+select, input {
+  font-weight: bold;
+  color: #260047;
+  background-color: #BDABBE;
+  border-radius: 6px;
+  width: 50%;
+  margin-left: 25%;
+  text-align: center;
+  margin-top: 10px;
+}
+
+#nav {
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    list-style: none;
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc; }
+#nav li {
+    float: left;
+    text-align:center; }
+#nav li a {
+    display: block;
+    padding: 30px 10px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align:center;
+    color: #069;
+    border-right: 1px solid #ccc; }
+#nav li a:hover {
+    color: #c00;
+    text-align:center;
+    background-color: #fff;}
+    /* End navigation bar styling. */
+
+#content {
+    padding: 0 50px 50px;
+    width:1000px;
+    height:800px;
+    background-color:#FFF;
+}
+
+#newPageButtons {
+  text-align: center;
+  background-color: #F8F7F3;
+  width: 50%;
+  box-shadow:3px 5px #CFCDC7;
+  margin-left: 25%;
+
+}
+
+.fb-login-button{
+  text-align: center;
+  margin-left: 25%;
+  width: 50%;
+
+
+}
+
+.navbar-nav.navbar-center {
+    position: absolute;
+    text-align: center;
+    /*margin-left: 10%;
+    width: 100%;
+    transform: translatex(-50%);*/
+}
+
+.nav-link{
+  margin-left: 40px;
+  text-align: center;
+}
+
+/**/
+
+.connectButton {
+  border: 1px dashed #9757B0;
+  border-radius: 20px;
+  background-color: #F5F3EE;
+  color: #BDABBE;
+  width: 50%;
+  margin-left: 25%;
+  font-family: crayonnette;
+  font-size: 30px;
+}
+
+#signInfo{
+  text-align: center;
+  border: 1px dashed #9757B0;
+  border-radius: 20px;
+  padding: 1%;
+  margin-left: 25%;
+  width: 50%;
+
+}
+
+#allImages{
+  float: left;
+  margin-left: 120px;
+  margin-bottom: 20px;
+}
+
+#userDetailsTarot{
+  float: left;
+  margin-left: 30px;
+}
+
+#tarotBoxes{
+  padding: 7px;
+  margin-left: 50px;
+  background-color: #66518a;
+  color: #F5F3EE;
+  margin-right: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 50%;
+  float: left;
+}
+
+#tarotimg {
+  margin-left: 150px;
+  float: left;
+}
+
+#claim{
+  border: 1px dashed #9757B0;
+  border-radius: 20px;
+  float:left;
+  margin-left: 50px;
+  width: 50%
+}
+
+#tarotDiv{
+  align-items: center;
+}
+
+#tarotBoxes2{
+  padding: 7px;
+  margin-left: 50px;
+  background-color: #BDABBE;
+  color: #F5F3EE;
+  margin-left: 10%;
+  width: 80%;
+}
+
+#emotion, #name {
+  width: 35%;
+}
+
+#cardDrawn {
+  text-align: center;
+}
+
+#visualization {
+  background-color: rgba(0,124,255,0.3);
+  color: black;
+  text-align: center;
+}
+
+/*Start: Login*/
+#left{
+  width: 50%;
+  float: left;
+  background-color: #F5F3EE;
+  margin-bottom:100px;
+
+}
+
+#right{
+  width: 50%;
+  float: right;
+  margin-bottom:100px;
+}
+
+#login{
+  text-align: left;
+  background-color: #F8F7F3;
+  width: 80%;
+  margin-left:10%;
+  box-shadow:3px 5px #CFCDC7;
+  margin-top: 50px;
+}
+
+#FAQ{
+}
+/*End: Login*/
+
+
+/*Start: astrologyEntry*/
+
+#astrologyForm{
+  width: 80%;
+  margin-left: 10%;
+  border: 1px dashed #9757B0;
+
+}
+
+#astrologyChart{
+  width: 50%;
+  height: 50%;
+  margin-left: 25%;
+}
+
+#bigThree{
+  text-align: center;
+  border: 1px dashed #9757B0;
+  border-radius: 20px;
+  padding: 1%;
+  margin-left: 25%;
+  width: 50%;
+}
+
+/*End: astrologyEntry*/
+
+@font-face {
+    font-family: 'crayonnette';
+    src: url('/images/Crayonnette.ttf');
+}
+
+@font-face {
+    font-family: 'luxurious';
+    src: url('/images/LuxuriousRoman-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Vollkorn';
+    src: url('/images/Vollkorn-Black.ttf');
+}
