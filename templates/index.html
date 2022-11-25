@@ -1,42 +1,9 @@
-<!doctype html>
+{% extends "layout.html" %}
 
-<html>
+{% block title %}
+    Home
+{% endblock %}
 
-  <head>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+{% block main %}
 
-    <h1>CLOSET</h1>
-
-  </head>
-
-  <body>
-
-    <nav class="navbar navbar-expand-lg" style="background-color: #F5F3EE;">
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="nav navbar-nav navbar-center">
-        <li class="nav-item active">
-          <a class="nav-link" href="/login">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/manifest">Manifest</a>
-        </li>
-      </ul>
-    </div>
-    </nav>
-
-    <h2>Grow Your Wardrobe</h2>
-    <h4>Add a new piece of clothing to your repertoire by filling out the form below</h4>
-    <div id = "clothingEntry">
-      <!-- Need to figure out how to save data in tables and use sql -->
-    </div>
-
-
-    <footer>
-    SITE NAME
-    </footer>
-
-
-
-  </body>
-</html>
+{% endblock %}
