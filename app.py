@@ -61,56 +61,13 @@ def index():
     return render_template("index.html", cash=cash, total=total, stocks=stocks)
 
 
-@app.route("/buy", methods=["GET", "POST"])
+@app.route("/graph")
 @login_required
-def buy():
-    """Buy shares of stock"""
+def graph():
+    """Show cost per wear graph of closet"""
 
-    if request.method == "POST":
-        # Checks if symbol and shares were inputted
-        if not request.form.get("symbol"):
-            return apology("Input a symbol.")
-        elif not request.form.get("shares"):
-            return apology("Input shares.")
-        # Checks if shares is a digit
-        elif not request.form.get("shares").isdigit():
-            return apology("Shares must be a number.")
-
-        shares = int(request.form.get("shares"))
-        if not shares:
-            return apology("Error processing shares.")
-
-        quote = lookup(request.form.get("symbol"))
-        if not quote:
-            return apology("Symbol is invalid.")
-
-        cost = shares * quote["price"]
-        rows = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
-        if not rows:
-            return apology("User is not in system.")
-
-        cash = rows[0]["cash"]
-        if cash < cost:
-            return apology("Not enough cash to make this purchase.")
-
-        db.execute("INSERT INTO transactions (user_id, symbol, shares, price) VALUES (?, ?, ?, ?)",
-                   session["user_id"], quote["symbol"], shares, quote["price"])
-        db.execute("UPDATE users SET cash = cash - ? WHERE id = ?", cost, session["user_id"])
-
-        flash("Bought!")
-        return redirect("/")
-
-    else:
-        return render_template("buy.html")
-
-
-@app.route("/history")
-@login_required
-def history():
-    """Show history of transactions"""
-
-    transactions = db.execute("SELECT * FROM transactions WHERE user_id = ?", session["user_id"])
-    return render_template("history.html", transactions=transactions)
+    clothing = db.execute("SELECT * FROM clothing WHERE user_id = ?", session["user_id"])
+    return render_template("graph.html", clothing=clothing)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -160,27 +117,6 @@ def logout():
     return redirect("/")
 
 
-@app.route("/quote", methods=["GET", "POST"])
-@login_required
-def quote():
-    """Get stock quote."""
-
-    # check if they inputted a symbol
-    if request.method == "POST":
-        if not request.form.get("symbol"):
-            return apology("Input a symbol.")
-
-        # check whether the symbol was valid
-        quote = lookup(request.form.get("symbol"))
-        if not quote:
-            return apology("Symbol is invalid.")
-
-        return render_template("quoted.html", quote=quote)
-
-    else:
-        return render_template("quote.html")
-
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
@@ -215,10 +151,10 @@ def register():
         return render_template("register.html")
 
 
-@app.route("/sell", methods=["GET", "POST"])
+@app.route("/addClothing", methods=["GET", "POST"])
 @login_required
-def sell():
-    """Sell shares of stock"""
+def addClothing():
+    """Add clothing to user's closet"""
 
     if request.method == "POST":
 
@@ -258,37 +194,27 @@ def sell():
     else:
         stocks = db.execute(
             "SELECT symbol FROM transactions WHERE user_id = ? GROUP BY symbol HAVING SUM(shares) > 0", session["user_id"])
-        return render_template("sell.html", stocks=stocks)
+        return render_template("addClothing.html", stocks=stocks)
 
 
-@app.route("/deposit", methods=["GET", "POST"])
+@app.route("/closet")
 @login_required
-def deposit():
-    """Add cash to account"""
+def closet():
+    """Display user's clothing"""
 
-    if request.method == "POST":
+    rows = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
+    if not rows:
+        return apology("User is not in system.")
 
-        # Checks if cash amount was inputted
-        if not request.form.get("cashAmount"):
-            return apology("Input a cash amount.")
+    cash = rows[0]["cash"]
+    total = cash
 
-        # Checks if shares is a digit
-        elif not request.form.get("cashAmount").isdigit():
-            return apology("Cash amount must be a number.")
+    stocks = db.execute(
+        "SELECT symbol, SUM(shares) AS shares FROM transactions WHERE user_id = ? GROUP BY symbol HAVING SUM(shares) > 0", session["user_id"])
+    for stock in stocks:
+        quote = lookup(stock["symbol"])
+        stock["name"] = quote["name"]
+        stock["price"] = quote["price"]
+        total += stock["price"] * stock["shares"]
 
-        cashAmount = int(request.form.get("cashAmount"))
-        if not cashAmount:
-            return apology("Error processing cash amount.")
-
-        rows = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
-
-        if not rows:
-            return apology("User is not in system.")
-
-        db.execute("UPDATE users SET cash = cash + ? WHERE id = ?", cashAmount, session["user_id"])
-
-        flash("Deposited!")
-        return redirect("/")
-
-    else:
-        return render_template("deposit.html")
+    return render_template("closet.html", cash=cash, total=total, stocks=stocks)
