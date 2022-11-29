@@ -7,6 +7,8 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
+import sqlite3
+from sqlite3 import Error
 
 from helpers import apology, login_required, lookup, usd
 
@@ -213,3 +215,4 @@ def closet():
         total += stock["price"] * stock["shares"]
 
     return render_template("closet.html", cash=cash, total=total, stocks=stocks)
+
