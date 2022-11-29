@@ -155,19 +155,10 @@ def addClothing():
 
     if request.method == "POST":
 
-        if not request.form.get("symbol"):
-            return apology("Input a symbol.")
-        elif not request.form.get("shares"):
-            return apology("Input shares.")
-        # Checks if shares is a digit
-        elif not request.form.get("shares").isdigit():
-            return apology("Shares must be a number.")
-
-        shares = int(request.form.get("shares"))
-        if not shares:
-            return apology("Error processing shares.")
-
-        symbol = request.form.get("symbol").upper()
+        if not request.form.get("picture"):
+            return apology("Input an image.")
+        elif not request.form.get("item_name"):
+            return apology("Input item name.")
 
         # Checks how many shares the user owns
         rows = db.execute(
@@ -181,8 +172,8 @@ def addClothing():
 
         quote = lookup(request.form.get("symbol"))
 
-        db.execute("INSERT INTO transactions (user_id, symbol, price, shares) VALUES (?, ?, ?, ?)",
-                   session["user_id"], quote["symbol"], quote["price"], -shares)
+        db.execute("INSERT INTO image_uploads (file_name, user_id, item_name) VALUES (?, ?, ?)", request.form.get("picture")
+                   session["user_id"], request.form.get("item_name"))
         db.execute("UPDATE users SET cash = cash + ? WHERE id = ?", shares * quote["price"], session["user_id"])
 
         flash("Sold!")
@@ -216,3 +207,71 @@ def closet():
 
     return render_template("closet.html", cash=cash, total=total, stocks=stocks)
 
+
+#Function that takes in file path and file blob and commits to database
+def insert_into_database(file_path_name, file_blob): 
+  try:
+    conn = sqlite3.connect('app.db')
+    print("[INFO] : Successful connection!")
+    cur = conn.cursor()
+    sql_insert_file_query = '''INSERT INTO uploads(file_name, file_blob)
+      VALUES(?, ?)'''
+    cur = conn.cursor()
+    cur.execute(sql_insert_file_query, (file_path_name, file_blob, ))
+    conn.commit()
+    print("[INFO] : The blob for ", file_path_name, " is in the database.") 
+    last_updated_entry = cur.lastrowid
+    return last_updated_entry
+  except Error as e:
+    print(e)
+  finally:
+    if conn:
+      conn.close()
+    else:
+      error = "Oh shucks, something is wrong here."
+
+#Create blob data to temporarily store the binary data
+def convert_into_binary(file_path):
+  with open(file_path, 'rb') as file:
+    binary = file.read()
+  return binary
+
+#Retrieve the file and view its original form - find the image file in the database and write blob to a file
+def read_blob_data(entry_id):
+  try:
+    conn = sqlite3.connect('app.db')
+    cur = conn.cursor()
+    print("[INFO] : Connected to SQLite to read_blob_data")
+    sql_fetch_blob_query = """SELECT * from uploads where id = ?"""
+    cur.execute(sql_fetch_blob_query, (entry_id,))
+    record = cur.fetchall()
+    for row in record:
+      converted_file_name = row[1]
+      photo_binarycode  = row[2]
+      # parse out the file name from converted_file_name
+      # Windows developers should reverse "/" to "\" to match your file path names 
+      last_slash_index = converted_file_name.rfind("/") + 1 
+      final_file_name = converted_file_name[last_slash_index:] 
+      write_to_file(photo_binarycode, final_file_name)
+      print("[DATA] : Image successfully stored on disk. Check the project directory. \n")
+    cur.close()
+  except sqlite3.Error as error:
+    print("[INFO] : Failed to read blob data from sqlite table", error)
+  finally:
+    if conn:
+        conn.close()
+
+#To convert binary into a file, pass the blob in as well as the name of the file
+def write_to_file(binary_data, file_name):
+  with open(file_name, 'wb') as file:
+    file.write(binary_data)
+  print("[DATA] : The following file has been written to the project directory: ", file_name)
+
+  def main():
+    #need to connect inputs to form
+    file_path_name = input("Enter full file path:\n") 
+    file_blob = convert_into_binary(file_path_name)
+    print("[INFO] : the last 100 characters of blob = ", file_blob[:100]) 
+    last_updated_entry = insert_into_database(file_path_name, file_blob)
+    #retrieving the image from the last entry
+    read_blob_data(last_updated_entry)
