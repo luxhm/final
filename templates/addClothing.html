@@ -7,18 +7,17 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/sell" method="post">
+
+<h2>Grow Your Wardrobe</h2>
+<h4>Add a new piece of clothing to your repertoire by filling out the form below</h4>
+<div id = "clothingEntry">
+    <form action="/addClothing" enctype="multipart/form-data" method="post">
         <div class="mb-3">
-            <select class="form-select mx-auto w-auto" name="symbol">
-                <option disabled selected>Symbol</option>
-                {% for stock in stocks %}
-                    <option value="{{ stock.symbol }}">{{ stock.symbol }}</option>
-                {% endfor %}
-            </select>
+            <input type="text" name="item_name" placeholder="Item Name">
+            <input type="file" name="picture" accept="image/*" />
         </div>
-        <div class="mb-3">
-            <input autocomplete="off" class="form-control mx-auto w-auto" min = "1" name="shares" placeholder="Shares" type="number">
-        </div>
-        <button class="btn btn-primary" type="submit">Sell</button>
+        <button class="btn btn-primary" type="submit">Upload Photo</button>
     </form>
+</div>
+
 {% endblock %}
