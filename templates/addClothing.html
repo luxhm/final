@@ -16,8 +16,16 @@
             <input type="text" name="item_name" placeholder="Item Name">
             <input type="file" name="picture" accept="image/*" />
         </div>
-        <button class="btn btn-primary" type="submit">Upload Photo</button>
+        <button class="btn btn-primary" type="submit" id="finput" onchange="upload()">Upload Photo</button>
     </form>
 </div>
+<script>
+    function upload(){
+        var imgcanvas = document.getElementById("canv1");
+        var fileinput = document.getElementById("finput");
+        var image = new SimpleImage(fileinput);
+        image.drawTo(imgcanvas);
+    }
+</script>
 
 {% endblock %}
