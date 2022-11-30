@@ -172,7 +172,7 @@ def addClothing():
 
         quote = lookup(request.form.get("symbol"))
 
-        db.execute("INSERT INTO image_uploads (file_name, user_id, item_name) VALUES (?, ?, ?)", request.form.get("picture")
+        db.execute("INSERT INTO image_uploads (file_name, user_id, item_name) VALUES (?, ?, ?)", request.form.get("picture"),
                    session["user_id"], request.form.get("item_name"))
         db.execute("UPDATE users SET cash = cash + ? WHERE id = ?", shares * quote["price"], session["user_id"])
 
