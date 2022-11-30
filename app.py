@@ -15,9 +15,6 @@ from helpers import apology, login_required, lookup, usd
 # Configure application
 app = Flask(__name__)
 
-# Custom filter
-app.jinja_env.filters["usd"] = usd
-
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -38,24 +35,9 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
-    """Show portfolio of stocks"""
+    """Show home page"""
 
-    rows = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
-    if not rows:
-        return apology("User is not in system.")
-
-    cash = rows[0]["cash"]
-    total = cash
-
-    stocks = db.execute(
-        "SELECT symbol, SUM(shares) AS shares FROM transactions WHERE user_id = ? GROUP BY symbol HAVING SUM(shares) > 0", session["user_id"])
-    for stock in stocks:
-        quote = lookup(stock["symbol"])
-        stock["name"] = quote["name"]
-        stock["price"] = quote["price"]
-        total += stock["price"] * stock["shares"]
-
-    return render_template("index.html", cash=cash, total=total, stocks=stocks)
+    return render_template("index.html")
 
 
 @app.route("/graph")
@@ -161,20 +143,20 @@ def addClothing():
             return apology("Input item name.")
 
         # Checks how many shares the user owns
-        #rows = db.execute(
-            #"SELECT SUM(shares) AS shares FROM transactions WHERE user_id = ? AND symbol = ? GROUP BY symbol", session["user_id"], symbol)
+        rows = db.execute(
+            "SELECT SUM(shares) AS shares FROM transactions WHERE user_id = ? AND symbol = ? GROUP BY symbol", session["user_id"], symbol)
 
-        #if len(rows) != 1:
-           # return apology("No stock is owned.")
+        if len(rows) != 1:
+            return apology("No stock is owned.")
 
-       # if shares > rows[0]["shares"]:
+        if shares > rows[0]["shares"]:
             return apology("Can not sell more stock than is owned.")
 
-        #quote = lookup(request.form.get("symbol"))
+        quote = lookup(request.form.get("symbol"))
 
         db.execute("INSERT INTO image_uploads (file_name, user_id, item_name) VALUES (?, ?, ?)", request.form.get("picture"),
                    session["user_id"], request.form.get("item_name"))
-        #db.execute("UPDATE users SET cash = cash + ? WHERE id = ?", shares * quote["price"], session["user_id"])
+        db.execute("UPDATE users SET cash = cash + ? WHERE id = ?", shares * quote["price"], session["user_id"])
 
         flash("Sold!")
         return redirect("/")
@@ -187,28 +169,10 @@ def addClothing():
 
 @app.route("/closet")
 @login_required
-def displayImage():
+def closet():
     """Display user's clothing"""
-<<<<<<< HEAD
- 
-    rows = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
-    if not rows:
-        return apology("User is not in system.")
-=======
-
-    #rows = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
-    #if not rows:
-    #    return apology("User is not in system.")
->>>>>>> 8a242734bcffea99fb4ac680e6d3144826d15be1
-
-    #cash = rows[0]["cash"]
-    #total = cash
 
     picturesDict = db.execute(
         "SELECT * FROM image_uploads WHERE user_id = ?", session["user_id"])
 
-<<<<<<< HEAD
-    return render_template("closet.html", cash=cash, total=total, stocks=stocks)
-=======
     return render_template("closet.html", picturesDict=picturesDict)
->>>>>>> 8a242734bcffea99fb4ac680e6d3144826d15be1
