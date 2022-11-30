@@ -172,7 +172,7 @@ def addClothing():
 
         #quote = lookup(request.form.get("symbol"))
 
-        db.execute("INSERT INTO image_uploads (file_name, user_id, item_name) VALUES (?, ?, ?)", request.form.get("picture")
+        db.execute("INSERT INTO image_uploads (file_name, user_id, item_name) VALUES (?, ?, ?)", request.form.get("picture"),
                    session["user_id"], request.form.get("item_name"))
         #db.execute("UPDATE users SET cash = cash + ? WHERE id = ?", shares * quote["price"], session["user_id"])
 
@@ -189,20 +189,26 @@ def addClothing():
 @login_required
 def displayImage():
     """Display user's clothing"""
+<<<<<<< HEAD
  
     rows = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
     if not rows:
         return apology("User is not in system.")
+=======
 
-    cash = rows[0]["cash"]
-    total = cash
+    #rows = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
+    #if not rows:
+    #    return apology("User is not in system.")
+>>>>>>> 8a242734bcffea99fb4ac680e6d3144826d15be1
 
-    stocks = db.execute(
-        "SELECT symbol, SUM(shares) AS shares FROM transactions WHERE user_id = ? GROUP BY symbol HAVING SUM(shares) > 0", session["user_id"])
-    for stock in stocks:
-        quote = lookup(stock["symbol"])
-        stock["name"] = quote["name"]
-        stock["price"] = quote["price"]
-        total += stock["price"] * stock["shares"]
+    #cash = rows[0]["cash"]
+    #total = cash
 
+    picturesDict = db.execute(
+        "SELECT * FROM image_uploads WHERE user_id = ?", session["user_id"])
+
+<<<<<<< HEAD
     return render_template("closet.html", cash=cash, total=total, stocks=stocks)
+=======
+    return render_template("closet.html", picturesDict=picturesDict)
+>>>>>>> 8a242734bcffea99fb4ac680e6d3144826d15be1
