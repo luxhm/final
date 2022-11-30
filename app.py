@@ -142,29 +142,15 @@ def addClothing():
         elif not request.form.get("item_name"):
             return apology("Input item name.")
 
-        # Checks how many shares the user owns
-        rows = db.execute(
-            "SELECT SUM(shares) AS shares FROM transactions WHERE user_id = ? AND symbol = ? GROUP BY symbol", session["user_id"], symbol)
-
-        if len(rows) != 1:
-            return apology("No stock is owned.")
-
-        if shares > rows[0]["shares"]:
-            return apology("Can not sell more stock than is owned.")
-
-        quote = lookup(request.form.get("symbol"))
 
         db.execute("INSERT INTO image_uploads (file_name, user_id, item_name) VALUES (?, ?, ?)", request.form.get("picture"),
                    session["user_id"], request.form.get("item_name"))
-        db.execute("UPDATE users SET cash = cash + ? WHERE id = ?", shares * quote["price"], session["user_id"])
 
-        flash("Sold!")
+        flash("Added!")
         return redirect("/")
 
     else:
-        stocks = db.execute(
-            "SELECT symbol FROM transactions WHERE user_id = ? GROUP BY symbol HAVING SUM(shares) > 0", session["user_id"])
-        return render_template("addClothing.html", stocks=stocks)
+        return render_template("addClothing.html")
 
 
 @app.route("/closet")
