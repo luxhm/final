@@ -36,7 +36,7 @@ def after_request(response):
 @login_required
 def index():
     """Show home page"""
-
+    
     return render_template("index.html")
 
 
@@ -112,6 +112,7 @@ def register():
         elif request.form.get("password") != request.form.get("confirmation"):
             return apology("Confirmation does not match the password.")
 
+        #Insert registered user into users database
         try:
             id = db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", request.form.get(
                 "username"), generate_password_hash(request.form.get("password")))
@@ -133,6 +134,7 @@ def register():
 def addClothing():
     """Add clothing to user's closet"""
 
+    #Check user inputted an image, image name, and cost
     if request.method == "POST":
 
         if not request.files["picture"]:
@@ -142,15 +144,19 @@ def addClothing():
         if not request.form.get("cost"):
             return apology("Input item cost.")
 
+        #Request file uploaded by user
         filename = request.files["picture"].filename
 
+        #Read uploaded file to variable
         file = request.files["picture"].read()
 
+        #Adding uploaded image to database
         db.execute(""" INSERT INTO image_uploads
                 (file_name, user_id, item_name, file_blob, cost)
                 VALUES (?, ?, ?, ?, ?)""",
                filename, session["user_id"], request.form.get("item_name"), file,  request.form.get("cost"))
-
+        
+        #Redirect to upload page
         return redirect("/closet")
 
     else:
@@ -162,13 +168,15 @@ def addClothing():
 def closet():
     """Display user's clothing and update count"""
 
+    #Get count from form upload
     if request.method == "POST":
         if not request.form.get("count"):
             return apology("Input a number.")
-
+        #Update the count in image_uploads 
         db.execute("UPDATE image_uploads SET count = ? WHERE id = ?", request.form.get("count"), request.form.get("image_id"))
         return redirect("/closet")
 
+    #Select user's uploaded images
     else:
         picturesDict = db.execute(
             "SELECT * FROM image_uploads WHERE user_id = ?", session["user_id"])

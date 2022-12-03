@@ -13,13 +13,13 @@
         <link href="/static/hanger.jpeg" rel="icon">
 
         <link href="/static/style.css" rel="stylesheet">
-
+        <!--Title of website-->
         <title>The Green Closet: {% block title %}{% endblock %}</title>
 
     </head>
 
     <body>
-
+        <!--Navigation bar to appear on every page-->
         <nav class="bg-light border navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/"><span class="logo">The</span><span class="green logo"> Green </span><span class="logo">Closet</span></a>
@@ -46,18 +46,10 @@
             </div>
         </nav>
 
-        {% if get_flashed_messages() %}
-            <header>
-                <div class="alert alert-primary mb-0 text-center" role="alert">
-                    {{ get_flashed_messages() | join(" ") }}
-                </div>
-            </header>
-        {% endif %}
-
         <main class="container-fluid py-5 text-center">
             {% block main %}{% endblock %}
         </main>
-
+        <!--Footer to appear on everypage-->
         <footer class="mb-5 small text-center text-muted">
             Created by Molly Stoltz and Lux Hogan-Murphy
         </footer>

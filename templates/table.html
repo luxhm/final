@@ -4,6 +4,7 @@
     Cost Per Wear Table
 {% endblock %}
 
+<!--Create a table to hold image name, count, and cost per wear-->
 {% block main %}
     <table class="table table-bordered">
         <thead>
@@ -15,6 +16,7 @@
             </tr>
         </thead>
         <tbody>
+            <!--For each item of clothing retrieve its name, cost, count and then calculate cost per wear-->
             {% for item in clothing %}
                 <tr>
                     <td class="text-start">{{ item.item_name }}</td>
