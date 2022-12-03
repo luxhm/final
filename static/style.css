@@ -2,134 +2,48 @@ body {
   background-color: #FFFFFF;
   font-size: 18px;
   color: #0e0906;
-  font-family: 'optima', sans-serif;
+  font-family: 'Gill Sans', sans-serif;
 }
 
-h1 {
-  margin-top: 25px;
-  font-size: 75px;
-  text-align: center;
-  color:#9757B0;
-  font-family: crayonnette;
+h3 {
+  font-size: 22px;
+  color: #0D4D19;
 }
 
-h2 {
-  margin-top: 20px;
-  margin-top: 20px;
-
-  text-align: center;
-  font-family: 'libre';
-  font-size: 30px;
+img {
+  border-radius: 4%;
 }
 
-h3{
-  background-color: #E8E6F1;
+a {
+  color: #0D4D19;
 }
 
-h4 {
-  text-align: center;
-  font-family: 'libre';
+.th {
+  background-color: #0D4D19;
 }
 
-div {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  background-color: #F5F3EE;
-  overflow: auto;
-  border-radius: 10px;
+.green {
+  color: #289947;
 }
 
-nav{
-  color: #BDABBE;
-  font-size: 16px;
-  text-align: center;
-  border-top: 1.5px solid #BDABBE;
-  border-bottom: 1.5px solid #BDABBE;
+.logo {
+  font-family: 'Rockwell';
+  font-weight: 700;
 }
 
-footer {
-  margin-top: 30px;
-  text-align: center;
-  bottom: 0px;
-  left: 45%;
+.button {
+    background-color: #0D4D19;
+    border: none;
+    color: #ffffff;
 }
 
-#nav {
-    width: 100%;
-    text-align: center;
-    padding: 0;
-    list-style: none;
-    background-color: #f2f2f2;
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #ccc;
+.image-title {
+  font-size: 22px;
 }
 
-#nav li {
-    float: left;
-    text-align:center;
-}
-
-#nav li a {
-    display: block;
-    padding: 30px 10px;
-    text-decoration: none;
-    font-weight: bold;
-    text-align:center;
-    color: #069;
-    border-right: 1px solid #ccc;
-}
-
-#nav li a:hover {
-    color: #c00;
-    text-align:center;
-    background-color: #fff;
-}
-
-#content {
-    padding: 0 50px 50px;
-    width:1000px;
-    height:800px;
-    background-color:#FFF;
-}
-
-#newPageButtons {
-  text-align: center;
-  background-color: #F8F7F3;
-  width: 50%;
-  box-shadow:3px 5px #CFCDC7;
-  margin-left: 25%;
-
-}
-
-.fb-login-button{
-  text-align: center;
-  margin-left: 25%;
-  width: 50%;
-}
-
-.navbar-nav.navbar-center {
-    position: absolute;
-    text-align: center;
-}
-
-.nav-link{
-  margin-left: 40px;
-  text-align: center;
-}
-
-#clothingEntry{
-  text-align: center;
-  border: 1px dashed #9757B0;
-  border-radius: 20px;
-  padding: 1%;
-  margin-left: 25%;
-  width: 50%;
-}
-
-#allImages{
-  float: left;
-  margin-left: 120px;
-  margin-bottom: 20px;
+.edges {
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 @font-face {

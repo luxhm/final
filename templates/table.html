@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Cost Per Wear Table
+{% endblock %}
+
+{% block main %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-start th">Name</th>
+                <th class="text-end th">Cost ($)</th>
+                <th class="text-end th">Times Worn</th>
+                <th class="text-end th">Cost Per Wear ($)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in clothing %}
+                <tr>
+                    <td class="text-start">{{ item.item_name }}</td>
+                    <td class="text-end">{{ item.cost }}</td>
+                    <td class="text-end">{{ item.count }}</td>
+                    <td class="text-end">{{ (item.cost / item.count) | round(2) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

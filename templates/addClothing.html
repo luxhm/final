@@ -1,5 +1,3 @@
-<!-- Copied from sell -->
-
 {% extends "layout.html" %}
 
 {% block title %}
@@ -8,15 +6,19 @@
 
 {% block main %}
 
-<h2>Grow Your Wardrobe</h2>
-<h4>Add a new piece of clothing to your repertoire by filling out the form below</h4>
+<h3>Add an item to your closet</h3>
+<br>
+
 <div id = "clothingEntry">
     <form action="/addClothing" enctype="multipart/form-data" method="post">
         <div class="mb-3">
-            <input type="text" name="item_name" placeholder="Item Name">
-            <input type="file" name="picture" accept="image/*" />
+            <input type="text" class="form-control mx-auto w-auto" name="item_name" placeholder="Item Name">
+            <br>
+            <input autocomplete="off" class="form-control mx-auto w-auto" min = "1" name="cost" placeholder="Cost ($)" type="number">
+            <br>
+            <input type="file" class="form-control mx-auto w-auto" name="picture" id="picture">
         </div>
-        <button class="btn btn-primary" type="submit">Upload Photo</button>
+        <button class="btn button" type="submit">Upload Photo</button>
     </form>
 </div>
 

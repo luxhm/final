@@ -1,19 +1,19 @@
-# For my personal touch, I implemented deposit (letting users add more cash to their account)
-
-import os
-
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 import sqlite3
+import base64
+import os
 from sqlite3 import Error
 
-from helpers import apology, login_required, lookup, usd
+from helpers import apology, login_required
 
 # Configure application
 app = Flask(__name__)
+app.jinja_env.filters["b64encode"] = lambda b: base64.b64encode(b).decode("ascii")
+
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
@@ -40,13 +40,13 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/graph")
+@app.route("/table")
 @login_required
 def graph():
-    """Show cost per wear graph of closet"""
+    """Show cost per wear table for closet"""
 
-    clothing = db.execute("SELECT * FROM clothing WHERE user_id = ?", session["user_id"])
-    return render_template("graph.html", clothing=clothing)
+    clothing = db.execute("SELECT * FROM image_uploads WHERE user_id = ?", session["user_id"])
+    return render_template("table.html", clothing=clothing)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -75,7 +75,7 @@ def login():
             return apology("invalid username and/or password", 403)
 
         # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+        session["user_id"] = rows[0]["user_id"]
 
         # Redirect user to home page
         return redirect("/")
@@ -121,8 +121,6 @@ def register():
             return apology("Username is already taken.")
 
         session["user_id"] = id
-
-        flash("Registered!")
         return redirect("/")
 
     else:
@@ -137,28 +135,42 @@ def addClothing():
 
     if request.method == "POST":
 
-        if not request.form.get("picture"):
+        if not request.files["picture"]:
             return apology("Input an image.")
-        elif not request.form.get("item_name"):
+        if not request.form.get("item_name"):
             return apology("Input item name.")
+        if not request.form.get("cost"):
+            return apology("Input item cost.")
 
+        filename = request.files["picture"].filename
 
-        db.execute("INSERT INTO image_uploads (file_name, user_id, item_name) VALUES (?, ?, ?)", request.form.get("picture"),
-                   session["user_id"], request.form.get("item_name"))
+        file = request.files["picture"].read()
 
-        flash("Added!")
-        return redirect("/")
+        db.execute(""" INSERT INTO image_uploads
+                (file_name, user_id, item_name, file_blob, cost)
+                VALUES (?, ?, ?, ?, ?)""",
+               filename, session["user_id"], request.form.get("item_name"), file,  request.form.get("cost"))
+
+        return redirect("/closet")
 
     else:
         return render_template("addClothing.html")
 
 
-@app.route("/closet")
+@app.route("/closet", methods=["GET", "POST"])
 @login_required
 def closet():
-    """Display user's clothing"""
+    """Display user's clothing and update count"""
 
-    picturesDict = db.execute(
-        "SELECT * FROM image_uploads WHERE user_id = ?", session["user_id"])
+    if request.method == "POST":
+        if not request.form.get("count"):
+            return apology("Input a number.")
 
-    return render_template("closet.html", picturesDict=picturesDict)
+        db.execute("UPDATE image_uploads SET count = ? WHERE id = ?", request.form.get("count"), request.form.get("image_id"))
+        return redirect("/closet")
+
+    else:
+        picturesDict = db.execute(
+            "SELECT * FROM image_uploads WHERE user_id = ?", session["user_id"])
+
+        return render_template("closet.html", picturesDict=picturesDict)
