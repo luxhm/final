@@ -42,7 +42,7 @@ def index():
 
 @app.route("/table")
 @login_required
-def graph():
+def table():
     """Show cost per wear table for closet"""
 
     clothing = db.execute("SELECT * FROM image_uploads WHERE user_id = ?", session["user_id"])
