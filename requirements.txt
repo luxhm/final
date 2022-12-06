@@ -2,3 +2,6 @@ cs50
 Flask
 Flask-Session
 requests
+Error
+sqlite3
+base64
