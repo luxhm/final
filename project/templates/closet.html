@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Closet
+{% endblock %}
+
+{% block main %}
+
+    <div class="container">
+        <div class="row">
+            <!--Create a grid system to display uploaded images-->
+            {% for item in picturesDict %}
+                <div class="col-sm">
+                    <img src="data:image/png;base64,{{ item.file_blob | b64encode | safe }}" alt="Closet Piece" height = "400" >
+                    <p class="image-title">{{item.item_name }}</p>
+                    <!--Form for user to update wear count of clothing-->
+                    <form action="/closet" method="post">
+                        <div class="mb-3">
+                            <input autocomplete="off" class="form-control mx-auto w-auto" min = "1" name="count" placeholder="{{ item.count }}" type="number">
+                            <input type="hidden" id="image_id" name="image_id" value="{{ item.id }}" />
+                        </div>
+                        <!--Button to submit form-->
+                        <button class="btn button" type="submit">Update wear count</button>
+                    </form>
+                    <br>
+
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

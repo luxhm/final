@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Clothing
+{% endblock %}
+
+{% block main %}
+
+<h3>Add an item to your closet</h3>
+<br>
+<!--Create a form that takes input for item name, cost of item, and image upload-->
+<div id = "clothingEntry">
+    <form action="/addClothing" enctype="multipart/form-data" method="post">
+        <div class="mb-3">
+            <input type="text" class="form-control mx-auto w-auto" name="item_name" placeholder="Item Name">
+            <br>
+            <input autocomplete="off" class="form-control mx-auto w-auto" min = "1" name="cost" placeholder="Cost ($)" type="number">
+            <br>
+            <input type="file" class="form-control mx-auto w-auto" name="picture" id="picture">
+        </div>
+        <!--Button to submit form - upload image-->
+        <button class="btn button" type="submit">Upload Photo</button>
+    </form>
+</div>
+
+{% endblock %}

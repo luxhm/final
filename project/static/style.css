@@ -1,0 +1,67 @@
+body {
+  background-color: #FFFFFF;
+  font-size: 18px;
+  color: #0e0906;
+  font-family: 'Gill Sans', sans-serif;
+}
+
+h3 {
+  font-size: 22px;
+  color: #0D4D19;
+}
+
+img {
+  border-radius: 4%;
+}
+
+a {
+  color: #0D4D19;
+}
+
+.th {
+  background-color: #0D4D19;
+}
+
+.green {
+  color: #289947;
+}
+
+.logo {
+  font-family: 'Rockwell';
+  font-weight: 700;
+}
+
+.button {
+    background-color: #0D4D19;
+    border: none;
+    color: #ffffff;
+}
+
+.image-title {
+  font-size: 22px;
+}
+
+.edges {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+@font-face {
+    font-family: 'crayonnette';
+    src: url('/images/Crayonnette.ttf');
+}
+
+@font-face {
+    font-family: 'luxurious';
+    src: url('/images/LuxuriousRoman-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Vollkorn';
+    src: url('/images/Vollkorn-Black.ttf');
+}
+
+@font-face {
+    font-family: 'libre';
+    src: url('/images/LibreBaskerville-Regular.ttf');
+}
