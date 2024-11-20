@@ -1,4 +1,4 @@
-# final
+# TheGreenCloset
 
 # This is the README page for Lux Hogan-Murphy's and Molly Stoltz's final project, The Green Closet, for CS50 at Harvard 2022.
 
